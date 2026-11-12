@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // MIGRATED: New Input System namespace
+using UnityEngine.InputSystem;
+using System.IO;
+using Codice.CM.Client.Differences.Graphic; // MIGRATED: New Input System namespace
 
 public class MainManager : MonoBehaviour
 {
+    SessionManager sessionManager;
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -45,6 +48,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sessionManager = FindFirstObjectByType<SessionManager>();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
@@ -83,6 +87,7 @@ public class MainManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            sessionManager.SaveData(m_BestPoints);
         }
     }
 
@@ -94,7 +99,6 @@ public class MainManager : MonoBehaviour
         if(m_Points>m_BestPoints)
         {
             SessionManager.Instance.bestScore=m_Points;
-            // SetBestScore();
         }
     }
 
@@ -102,6 +106,7 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
     }
     void SetBestScore()
     {
@@ -112,4 +117,5 @@ public class MainManager : MonoBehaviour
             BestScore.text=$"Best Score: {name} : {m_BestPoints}";
         }
     }
+
 }
