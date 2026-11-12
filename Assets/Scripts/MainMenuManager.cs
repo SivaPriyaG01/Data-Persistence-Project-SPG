@@ -38,6 +38,7 @@ public class MainMenuManager : MonoBehaviour
         if(SessionManager.Instance!=null)
         {
             SessionManager.Instance.playerName=name;
+            SessionManager.Instance.bestScore=0;
         }
     }
 
